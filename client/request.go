@@ -44,7 +44,7 @@ func SendRequest(sign *Sign, method, scheme, host, path string, data ParamData) 
 	} else {
 		signData["Signature"] = s
 	}
-	path += "?" + encodeQueryString(signData)
+	path += "?" + sign.EncodeQueryString(signData)
 	if isGetMethod(method) == false {
 		// POST 请求 JSON
 		if b, err := json.Marshal(data); err != nil {

@@ -18,6 +18,11 @@ func NewMarket() (*market.Market, error) {
 	return market.NewMarket()
 }
 
+/// 创建WebSoceket版Trade客户端
+func NewTrade(accessKeyId, accessKeySecret string) (*market.Market, error) {
+	return market.NewTrade(accessKeyId, accessKeySecret)
+}
+
 /// 创建RESTFul客户端
 func NewClient(accessKeyId, accessKeySecret string) (*client.Client, error) {
 	return client.NewClient(client.Endpoint, accessKeyId, accessKeySecret)

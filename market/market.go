@@ -3,17 +3,22 @@ package market
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"time"
 
 	"math"
 
+	"sync"
+
 	"github.com/bitly/go-simplejson"
 	"github.com/leizongmin/huobiapi/debug"
-	"sync"
 )
 
-// Endpoint 行情的Websocket入口
-var Endpoint = "wss://api.huobi.pro/ws"
+// MarketEndpoint 行情的Websocket入口
+var MarketEndpoint = "wss://api.huobi.pro/ws"
+
+// WSEndpoint 资产订单的Websocket入口
+var TradeEndPoint = "wss://api.huobi.pro/ws/v1"
 
 // ConnectionClosedError Websocket未连接错误
 var ConnectionClosedError = fmt.Errorf("websocket connection closed")
@@ -26,6 +31,10 @@ type wsOperation struct {
 type Market struct {
 	ws *SafeWebSocket
 
+	Sign              *Sign
+	endpoint          string
+	pathPrefix        string
+	scheme            string
 	listeners         map[string]Listener
 	listenerMutex     sync.Mutex
 	subscribedTopic   map[string]bool
@@ -49,7 +58,17 @@ type Listener = func(topic string, json *simplejson.Json)
 
 // NewMarket 创建Market实例
 func NewMarket() (m *Market, err error) {
+	return newMarket(MarketEndpoint, "", "")
+}
+
+// NewTrade 创建Trade实例
+func NewTrade(accessKeyId, accessKeySecret string) (m *Market, err error) {
+	return newMarket(TradeEndPoint, accessKeyId, accessKeySecret)
+}
+
+func newMarket(endpoint, accessKeyId, accessKeySecret string) (m *Market, err error) {
 	m = &Market{
+		endpoint:          endpoint,
 		HeartbeatInterval: 5 * time.Second,
 		ReceiveTimeout:    10 * time.Second,
 		ws:                nil,
@@ -58,6 +77,10 @@ func NewMarket() (m *Market, err error) {
 		subscribeResultCb: make(map[string]jsonChan),
 		requestResultCb:   make(map[string]jsonChan),
 		subscribedTopic:   make(map[string]bool),
+	}
+
+	if accessKeyId != "" && accessKeySecret != "" {
+		m.Sign = NewSign(accessKeyId, accessKeySecret)
 	}
 
 	if err := m.connect(); err != nil {
@@ -70,7 +93,7 @@ func NewMarket() (m *Market, err error) {
 // connect 连接
 func (m *Market) connect() error {
 	debug.Println("connecting")
-	ws, err := NewSafeWebSocket(Endpoint)
+	ws, err := NewSafeWebSocket(m.endpoint)
 	if err != nil {
 		return err
 	}
@@ -118,6 +141,17 @@ func (m *Market) sendMessage(data interface{}) error {
 	debug.Println("sendMessage", string(b))
 	m.ws.Send(b)
 	return nil
+}
+
+// Auth 资产订单ws需要鉴权验证
+func (m *Market) Auth() error {
+	urlInfo, err := url.Parse(m.endpoint)
+	if err != nil {
+		return err
+	}
+
+	authMapping := m.Sign.Get("GET", urlInfo.Host, urlInfo.Path)
+	return m.sendMessage(authMapping)
 }
 
 // handleMessageLoop 处理消息循环
