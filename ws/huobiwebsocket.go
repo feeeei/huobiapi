@@ -3,11 +3,12 @@ package ws
 import (
 	"encoding/json"
 	"fmt"
-	"huobiapi/debug"
-	"huobiapi/utils"
 	"math"
 	"sync"
 	"time"
+
+	"github.com/leizongmin/huobiapi/debug"
+	"github.com/leizongmin/huobiapi/utils"
 
 	"github.com/bitly/go-simplejson"
 )

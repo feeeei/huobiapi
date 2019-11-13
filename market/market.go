@@ -2,9 +2,10 @@ package market
 
 import (
 	"fmt"
-	"huobiapi/debug"
-	"huobiapi/utils"
-	"huobiapi/ws"
+
+	"github.com/leizongmin/huobiapi/debug"
+	"github.com/leizongmin/huobiapi/utils"
+	"github.com/leizongmin/huobiapi/ws"
 
 	"github.com/bitly/go-simplejson"
 )

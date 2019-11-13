@@ -2,9 +2,10 @@ package trade
 
 import (
 	"fmt"
-	"huobiapi/debug"
-	"huobiapi/ws"
 	"net/url"
+
+	"github.com/leizongmin/huobiapi/debug"
+	"github.com/leizongmin/huobiapi/ws"
 
 	"github.com/bitly/go-simplejson"
 )
