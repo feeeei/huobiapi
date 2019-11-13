@@ -1,4 +1,4 @@
-package market
+package utils
 
 import (
 	"bytes"
@@ -10,8 +10,8 @@ import (
 
 var letterRunes = []rune("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
-// getRandomString 返回随机字符串
-func getRandomString(n uint) string {
+// GetRandomString 返回随机字符串
+func GetRandomString(n uint) string {
 	b := make([]rune, n)
 	for i := range b {
 		b[i] = letterRunes[rand.Intn(len(letterRunes))]
@@ -19,13 +19,13 @@ func getRandomString(n uint) string {
 	return string(b)
 }
 
-// getUinxMillisecond 取毫秒时间戳
-func getUinxMillisecond() int64 {
+// GetUinxMillisecond 取毫秒时间戳
+func GetUinxMillisecond() int64 {
 	return time.Now().UnixNano() / int64(time.Millisecond)
 }
 
-// unGzipData 解压gzip的数据
-func unGzipData(buf []byte) ([]byte, error) {
+// UnGzipData 解压gzip的数据
+func UnGzipData(buf []byte) ([]byte, error) {
 	r, err := gzip.NewReader(bytes.NewBuffer(buf))
 	if err != nil {
 		return nil, err

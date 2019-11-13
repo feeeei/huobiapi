@@ -1,9 +1,9 @@
-package market
+package trade
 
 import (
 	"time"
 
-	"github.com/leizongmin/huobiapi/sign"
+	"huobiapi/sign"
 )
 
 type Sign struct {
