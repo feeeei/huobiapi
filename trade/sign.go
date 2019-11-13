@@ -3,7 +3,7 @@ package trade
 import (
 	"time"
 
-	"github.com/leizongmin/huobiapi/sign"
+	"github.com/feeeei/huobiapi/sign"
 )
 
 type Sign struct {

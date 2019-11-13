@@ -1,6 +1,6 @@
 package client
 
-import "github.com/leizongmin/huobiapi/sign"
+import "github.com/feeeei/huobiapi/sign"
 
 type Sign struct {
 	*sign.Sign

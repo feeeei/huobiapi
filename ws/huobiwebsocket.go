@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/leizongmin/huobiapi/debug"
-	"github.com/leizongmin/huobiapi/utils"
+	"github.com/feeeei/huobiapi/debug"
+	"github.com/feeeei/huobiapi/utils"
 
 	"github.com/bitly/go-simplejson"
 )

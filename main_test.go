@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/leizongmin/huobiapi/data_type"
+	"github.com/feeeei/huobiapi/data_type"
 
 	"github.com/bitly/go-simplejson"
 	"github.com/stretchr/testify/assert"

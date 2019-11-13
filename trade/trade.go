@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/leizongmin/huobiapi/debug"
-	"github.com/leizongmin/huobiapi/ws"
+	"github.com/feeeei/huobiapi/debug"
+	"github.com/feeeei/huobiapi/ws"
 
 	"github.com/bitly/go-simplejson"
 )

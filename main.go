@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/leizongmin/huobiapi/client"
-	"github.com/leizongmin/huobiapi/market"
-	"github.com/leizongmin/huobiapi/trade"
-	"github.com/leizongmin/huobiapi/ws"
+	"github.com/feeeei/huobiapi/client"
+	"github.com/feeeei/huobiapi/market"
+	"github.com/feeeei/huobiapi/trade"
+	"github.com/feeeei/huobiapi/ws"
 
 	"github.com/bitly/go-simplejson"
 )
