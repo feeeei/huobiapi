@@ -84,6 +84,19 @@ func (m *Trade) HandleMessage(json *simplejson.Json) {
 		return
 	}
 
+	// 处理订阅消息
+	if op := json.Get("op").MustString(); op == "notify" {
+		topic := json.Get("topic").MustString()
+		m.ListenerMutex.Lock()
+		listener, ok := m.Listeners[topic]
+		m.ListenerMutex.Unlock()
+		if ok {
+			debug.Println("handleSubscribe", json)
+			listener(topic, json)
+		}
+		return
+	}
+
 	// 处理订阅成功通知
 	if op := json.Get("op").MustString(); op == "sub" {
 		c, ok := m.SubscribeResultCb[json.Get("topic").MustString()]
