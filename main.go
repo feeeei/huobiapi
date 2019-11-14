@@ -1,4 +1,4 @@
-package main
+package huobiapi
 
 import (
 	"github.com/feeeei/huobiapi/client"
